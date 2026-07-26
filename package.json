@@ -1,0 +1,24 @@
+{
+  "name": "student-math-calc",
+  "version": "1.0.0",
+  "description": "Comprehensive student calculator web application with scientific, 2D graphing, statistics, solver, and converter features.",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx http-server ./ -p 8080",
+    "dev": "npx http-server ./ -p 8080 -c-1"
+  },
+  "keywords": [
+    "calculator",
+    "scientific-calculator",
+    "graphing-calculator",
+    "statistics",
+    "algebra-solver",
+    "unit-converter",
+    "student-tools"
+  ],
+  "author": "Antigravity AI",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}
