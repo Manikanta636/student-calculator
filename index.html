@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OmniCalc | Ultimate Student Calculator & Math Suite</title>
+  <meta name="description" content="Comprehensive student calculator with scientific operations, 2D graphing, statistics analyzer, quadratic solver, and unit converter.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Navigation Header -->
+    <header class="app-header">
+      <div class="logo-group">
+        <div class="logo-icon">
+          <i class="fa-solid fa-calculator"></i>
+        </div>
+        <div class="logo-text">
+          <h1>OmniCalc</h1>
+          <span class="logo-badge">STUDENT EDITION</span>
+        </div>
+      </div>
+
+      <!-- Mode Switcher Tabs -->
+      <nav class="nav-tabs" id="navTabs">
+        <button class="tab-btn active" data-tab="scientific">
+          <i class="fa-solid fa-flask"></i> <span>Scientific</span>
+        </button>
+        <button class="tab-btn" data-tab="graphing">
+          <i class="fa-solid fa-chart-line"></i> <span>2D Grapher</span>
+        </button>
+        <button class="tab-btn" data-tab="statistics">
+          <i class="fa-solid fa-chart-pie"></i> <span>Statistics</span>
+        </button>
+        <button class="tab-btn" data-tab="solvers">
+          <i class="fa-solid fa-square-root-variable"></i> <span>Solvers</span>
+        </button>
+        <button class="tab-btn" data-tab="converter">
+          <i class="fa-solid fa-right-left"></i> <span>Converter</span>
+        </button>
+      </nav>
+
+      <!-- Action Buttons -->
+      <div class="header-actions">
+        <button class="icon-btn" id="shortcutsBtn" title="Keyboard Shortcuts">
+          <i class="fa-solid fa-keyboard"></i>
+        </button>
+        <button class="icon-btn" id="historyToggleBtn" title="Calculation History">
+          <i class="fa-solid fa-clock-rotate-left"></i>
+        </button>
+        <button class="icon-btn" id="themeToggleBtn" title="Toggle Light/Dark Theme">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      
+      <!-- ================= 1. SCIENTIFIC CALCULATOR TAB ================= -->
+      <section class="tab-content active" id="tab-scientific">
+        <div class="calculator-card glass-panel">
+          
+          <!-- Screen Display -->
+          <div class="calc-display-container">
+            <div class="display-top-bar">
+              <div class="status-indicators">
+                <button class="indicator-badge" id="angleUnitBtn" title="Click to toggle DEG/RAD">DEG</button>
+                <span class="indicator-badge memory-indicator hidden" id="memoryBadge">M</span>
+                <span class="indicator-badge shift-indicator hidden" id="shiftBadge">2nd</span>
+              </div>
+              <div class="expression-line" id="expressionLine"></div>
+            </div>
+            <div class="main-result-line" id="resultLine">0</div>
+          </div>
+
+          <!-- Quick Toggle Row -->
+          <div class="control-row">
+            <button class="pill-toggle active" id="degRadToggle">DEG</button>
+            <button class="pill-toggle" id="secondToggle">2nd</button>
+            <button class="pill-toggle" id="hypToggle">HYP</button>
+            <div class="memory-bar">
+              <button class="mem-btn" data-action="mc">MC</button>
+              <button class="mem-btn" data-action="mr">MR</button>
+              <button class="mem-btn" data-action="m-plus">M+</button>
+              <button class="mem-btn" data-action="m-minus">M-</button>
+              <button class="mem-btn" data-action="ms">MS</button>
+            </div>
+          </div>
+
+          <!-- Keypad Grid -->
+          <div class="keypad-grid">
+            <!-- Row 1 (Scientific Operators) -->
+            <button class="key key-func" data-cmd="sin" data-shift="asin">sin</button>
+            <button class="key key-func" data-cmd="cos" data-shift="acos">cos</button>
+            <button class="key key-func" data-cmd="tan" data-shift="atan">tan</button>
+            <button class="key key-func" data-cmd="ln" data-shift="e^x">ln</button>
+            <button class="key key-func" data-cmd="log" data-shift="10^x">log</button>
+
+            <!-- Row 2 -->
+            <button class="key key-func" data-cmd="^" data-shift="root">x^y</button>
+            <button class="key key-func" data-cmd="^2" data-shift="^3">x²</button>
+            <button class="key key-func" data-cmd="sqrt" data-shift="cbrt">√x</button>
+            <button class="key key-func" data-cmd="fact">n!</button>
+            <button class="key key-func" data-cmd="recip">1/x</button>
+
+            <!-- Row 3 -->
+            <button class="key key-func" data-cmd="pi">π</button>
+            <button class="key key-func" data-cmd="e">e</button>
+            <button class="key key-func" data-cmd="(">(</button>
+            <button class="key key-func" data-cmd=")">)</button>
+            <button class="key key-func" data-cmd="abs">|x|</button>
+
+            <!-- Row 4 (Numbers & Basic Operators) -->
+            <button class="key key-num" data-val="7">7</button>
+            <button class="key key-num" data-val="8">8</button>
+            <button class="key key-num" data-val="9">9</button>
+            <button class="key key-action key-del" data-action="delete"><i class="fa-solid fa-backspace"></i></button>
+            <button class="key key-action key-clear" data-action="clear">AC</button>
+
+            <!-- Row 5 -->
+            <button class="key key-num" data-val="4">4</button>
+            <button class="key key-num" data-val="5">5</button>
+            <button class="key key-num" data-val="6">6</button>
+            <button class="key key-op" data-op="*">×</button>
+            <button class="key key-op" data-op="/">÷</button>
+
+            <!-- Row 6 -->
+            <button class="key key-num" data-val="1">1</button>
+            <button class="key key-num" data-val="2">2</button>
+            <button class="key key-num" data-val="3">3</button>
+            <button class="key key-op" data-op="+">+</button>
+            <button class="key key-op" data-op="-">-</button>
+
+            <!-- Row 7 -->
+            <button class="key key-num" data-val="0">0</button>
+            <button class="key key-num" data-val=".">.</button>
+            <button class="key key-func" data-cmd="ans">Ans</button>
+            <button class="key key-op" data-op="%">%</button>
+            <button class="key key-equals" data-action="equals">=</button>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ================= 2. 2D GRAPHING CALCULATOR TAB ================= -->
+      <section class="tab-content" id="tab-graphing">
+        <div class="grapher-layout">
+          
+          <!-- Graph Controls Sidebar -->
+          <div class="graph-sidebar glass-panel">
+            <h3><i class="fa-solid fa-sliders"></i> Function Controls</h3>
+            
+            <div class="function-inputs">
+              <div class="func-input-group">
+                <label for="func1" style="color: var(--accent-cyan);"><i class="fa-solid fa-wave-square"></i> f₁(x) =</label>
+                <div class="input-with-color">
+                  <input type="text" id="func1" value="x^2 - 4" placeholder="e.g. x^2 - 4">
+                  <input type="color" id="color1" value="#00f2fe">
+                </div>
+              </div>
+
+              <div class="func-input-group">
+                <label for="func2" style="color: var(--accent-pink);"><i class="fa-solid fa-wave-square"></i> f₂(x) =</label>
+                <div class="input-with-color">
+                  <input type="text" id="func2" value="sin(x)" placeholder="e.g. sin(x)">
+                  <input type="color" id="color2" value="#ff4b8b">
+                </div>
+              </div>
+            </div>
+
+            <button class="primary-btn" id="plotGraphBtn">
+              <i class="fa-solid fa-play"></i> Plot Functions
+            </button>
+
+            <div class="preset-section">
+              <h4>Presets</h4>
+              <div class="preset-buttons">
+                <button class="preset-chip" data-f1="x^2 - 4" data-f2="2*x + 1">Quadratic & Line</button>
+                <button class="preset-chip" data-f1="sin(x)" data-f2="cos(x)">Sin vs Cos</button>
+                <button class="preset-chip" data-f1="x^3 - 3*x" data-f2="0">Cubic Polynomial</button>
+                <button class="preset-chip" data-f1="1/x" data-f2="">Hyperbola 1/x</button>
+              </div>
+            </div>
+
+            <!-- Axis Limits -->
+            <div class="axis-limits">
+              <h4><i class="fa-solid fa-expand"></i> Axis Range</h4>
+              <div class="range-grid">
+                <div>
+                  <label>X Min</label>
+                  <input type="number" id="xMin" value="-10" step="1">
+                </div>
+                <div>
+                  <label>X Max</label>
+                  <input type="number" id="xMax" value="10" step="1">
+                </div>
+                <div>
+                  <label>Y Min</label>
+                  <input type="number" id="yMin" value="-10" step="1">
+                </div>
+                <div>
+                  <label>Y Max</label>
+                  <input type="number" id="yMax" value="10" step="1">
+                </div>
+              </div>
+              <button class="secondary-btn btn-sm" id="resetZoomBtn">
+                <i class="fa-solid fa-arrows-to-dot"></i> Reset View
+              </button>
+            </div>
+
+            <!-- Trace Value Display -->
+            <div class="trace-info glass-card">
+              <div><strong>X:</strong> <span id="traceX">0.00</span></div>
+              <div><strong>f₁(x):</strong> <span id="traceY1" style="color: var(--accent-cyan);">--</span></div>
+              <div><strong>f₂(x):</strong> <span id="traceY2" style="color: var(--accent-pink);">--</span></div>
+            </div>
+          </div>
+
+          <!-- Canvas Viewport -->
+          <div class="graph-viewport glass-panel">
+            <div class="canvas-header">
+              <span>Interactive Graph Viewport (Scroll to zoom, drag to pan)</span>
+              <div class="canvas-tools">
+                <button id="zoomInBtn" title="Zoom In"><i class="fa-solid fa-plus"></i></button>
+                <button id="zoomOutBtn" title="Zoom Out"><i class="fa-solid fa-minus"></i></button>
+              </div>
+            </div>
+            <div class="canvas-wrapper">
+              <canvas id="graphCanvas"></canvas>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ================= 3. STATISTICS CALCULATOR TAB ================= -->
+      <section class="tab-content" id="tab-statistics">
+        <div class="stats-layout">
+          
+          <div class="stats-input-panel glass-panel">
+            <h3><i class="fa-solid fa-list-ol"></i> Data Dataset Input</h3>
+            <p class="section-desc">Enter numbers separated by commas, spaces, or newlines.</p>
+            
+            <textarea id="statsDataInput" rows="6" placeholder="e.g. 12, 15, 18, 22, 25, 29, 31, 15, 18, 22"></textarea>
+
+            <div class="stats-actions">
+              <button class="primary-btn" id="calcStatsBtn">
+                <i class="fa-solid fa-calculator"></i> Analyze Dataset
+              </button>
+              <button class="secondary-btn" id="sampleDataBtn">
+                <i class="fa-solid fa-dice"></i> Sample Data
+              </button>
+              <button class="secondary-btn" id="clearStatsBtn">
+                <i class="fa-solid fa-trash"></i> Clear
+              </button>
+            </div>
+          </div>
+
+          <!-- Results Dashboard -->
+          <div class="stats-results-panel glass-panel">
+            <h3><i class="fa-solid fa-chart-column"></i> Statistical Analysis</h3>
+            
+            <div class="stats-grid" id="statsGrid">
+              <div class="stat-card">
+                <div class="stat-label">Count (N)</div>
+                <div class="stat-value" id="statCount">0</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">Sum (Σx)</div>
+                <div class="stat-value" id="statSum">0</div>
+              </div>
+              <div class="stat-card highlight-card">
+                <div class="stat-label">Mean (μ / x̄)</div>
+                <div class="stat-value" id="statMean">0</div>
+              </div>
+              <div class="stat-card highlight-card">
+                <div class="stat-label">Median</div>
+                <div class="stat-value" id="statMedian">0</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">Mode</div>
+                <div class="stat-value" id="statMode">--</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">Min / Max</div>
+                <div class="stat-value" id="statMinMax">--</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">Range</div>
+                <div class="stat-value" id="statRange">0</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">Sample Std Dev (s)</div>
+                <div class="stat-value" id="statSampleStdDev">0</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">Population Std Dev (σ)</div>
+                <div class="stat-value" id="statPopStdDev">0</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">Sample Variance (s²)</div>
+                <div class="stat-value" id="statSampleVar">0</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">Quartile 1 (Q₁)</div>
+                <div class="stat-value" id="statQ1">0</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">Quartile 3 (Q₃)</div>
+                <div class="stat-value" id="statQ3">0</div>
+              </div>
+            </div>
+
+            <!-- Sorted Array View -->
+            <div class="sorted-data-box">
+              <h4>Sorted Dataset:</h4>
+              <div class="sorted-tags" id="sortedTags">
+                <span class="placeholder-text">Enter data and click Analyze</span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ================= 4. SOLVERS & FORMULAS TAB ================= -->
+      <section class="tab-content" id="tab-solvers">
+        <div class="solvers-container">
+          
+          <div class="solver-tabs">
+            <button class="solver-tab-btn active" data-solver="quadratic">Quadratic Solver</button>
+            <button class="solver-tab-btn" data-solver="linear">2x2 Linear System</button>
+            <button class="solver-tab-btn" data-solver="geometry">Geometry Solver</button>
+          </div>
+
+          <!-- Quadratic Solver View -->
+          <div class="solver-view active" id="solver-quadratic">
+            <div class="solver-card glass-panel">
+              <h3>Quadratic Equation Solver</h3>
+              <p class="formula-banner">Standard Form: <strong>ax² + bx + c = 0</strong></p>
+
+              <div class="quad-inputs">
+                <div class="quad-field">
+                  <label>a =</label>
+                  <input type="number" id="quadA" value="1" step="any">
+                </div>
+                <div class="quad-field">
+                  <label>b =</label>
+                  <input type="number" id="quadB" value="-5" step="any">
+                </div>
+                <div class="quad-field">
+                  <label>c =</label>
+                  <input type="number" id="quadC" value="6" step="any">
+                </div>
+              </div>
+
+              <button class="primary-btn" id="solveQuadBtn">Solve Quadratic</button>
+
+              <div class="solution-box glass-card" id="quadResult">
+                <div class="root-badge">Roots</div>
+                <div class="root-display" id="quadRoots">x₁ = 3, x₂ = 2</div>
+                <div class="step-explanation" id="quadSteps">
+                  Discriminant Δ = b² - 4ac = (-5)² - 4(1)(6) = 25 - 24 = 1 (Real & Distinct Roots)
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Linear 2x2 System View -->
+          <div class="solver-view" id="solver-linear">
+            <div class="solver-card glass-panel">
+              <h3>System of Linear Equations (2 Variables)</h3>
+              <p class="formula-banner">
+                Line 1: <strong>a₁x + b₁y = c₁</strong><br>
+                Line 2: <strong>a₂x + b₂y = c₂</strong>
+              </p>
+
+              <div class="linear-grid">
+                <div class="linear-row">
+                  <span>Eq 1:</span>
+                  <input type="number" id="linA1" value="2" placeholder="a1"> <span>x +</span>
+                  <input type="number" id="linB1" value="3" placeholder="b1"> <span>y =</span>
+                  <input type="number" id="linC1" value="12" placeholder="c1">
+                </div>
+                <div class="linear-row">
+                  <span>Eq 2:</span>
+                  <input type="number" id="linA2" value="1" placeholder="a2"> <span>x -</span>
+                  <input type="number" id="linB2" value="1" placeholder="b2"> <span>y =</span>
+                  <input type="number" id="linC2" value="1" placeholder="c2">
+                </div>
+              </div>
+
+              <button class="primary-btn" id="solveLinearBtn">Solve Linear System</button>
+
+              <div class="solution-box glass-card" id="linearResult">
+                <div class="root-badge">Solution Point (x, y)</div>
+                <div class="root-display" id="linearRoots">x = 3.00, y = 2.00</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Geometry Calculator View -->
+          <div class="solver-view" id="solver-geometry">
+            <div class="solver-card glass-panel">
+              <h3>Geometry Shapes & Formulas</h3>
+              
+              <div class="geom-select">
+                <label>Select Shape:</label>
+                <select id="geomShapeSelect">
+                  <option value="circle">Circle (Area & Circumference)</option>
+                  <option value="triangle">Right Triangle (Hypotenuse & Area)</option>
+                  <option value="sphere">Sphere (Volume & Surface Area)</option>
+                  <option value="cylinder">Cylinder (Volume & Surface Area)</option>
+                </select>
+              </div>
+
+              <div class="geom-inputs" id="geomInputs">
+                <!-- Inputs dynamic based on selection -->
+              </div>
+
+              <button class="primary-btn" id="solveGeomBtn">Calculate Geometry</button>
+
+              <div class="solution-box glass-card" id="geomResult">
+                <div class="root-badge">Geometric Properties</div>
+                <div class="root-display" id="geomDisplay">Select shape and enter parameters.</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ================= 5. UNIT CONVERTER TAB ================= -->
+      <section class="tab-content" id="tab-converter">
+        <div class="converter-card glass-panel">
+          <h3><i class="fa-solid fa-right-left"></i> Multi-Unit Converter</h3>
+          
+          <div class="converter-category-bar" id="converterCategories">
+            <button class="cat-btn active" data-cat="length"><i class="fa-solid fa-ruler"></i> Length</button>
+            <button class="cat-btn" data-cat="mass"><i class="fa-solid fa-weight-hanging"></i> Weight/Mass</button>
+            <button class="cat-btn" data-cat="temperature"><i class="fa-solid fa-temperature-half"></i> Temperature</button>
+            <button class="cat-btn" data-cat="area"><i class="fa-solid fa-chart-area"></i> Area</button>
+            <button class="cat-btn" data-cat="volume"><i class="fa-solid fa-cube"></i> Volume</button>
+            <button class="cat-btn" data-cat="speed"><i class="fa-solid fa-gauge-high"></i> Speed</button>
+          </div>
+
+          <div class="converter-box">
+            <div class="convert-field">
+              <label>From:</label>
+              <input type="number" id="convertFromVal" value="1" step="any">
+              <select id="convertFromUnit"></select>
+            </div>
+
+            <button class="swap-btn" id="swapUnitsBtn" title="Swap Units">
+              <i class="fa-solid fa-arrow-right-arrow-left"></i>
+            </button>
+
+            <div class="convert-field">
+              <label>To:</label>
+              <input type="number" id="convertToVal" value="0" readonly>
+              <select id="convertToUnit"></select>
+            </div>
+          </div>
+
+          <div class="conversion-formula-tag" id="conversionFormulaText">
+            1 Meter = 3.28084 Feet
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+
+    <!-- History Drawer -->
+    <aside class="history-drawer" id="historyDrawer">
+      <div class="drawer-header">
+        <h3><i class="fa-solid fa-clock-rotate-left"></i> History</h3>
+        <button class="close-drawer-btn" id="closeHistoryBtn">&times;</button>
+      </div>
+      <div class="drawer-body" id="historyList">
+        <div class="empty-history">No calculation history yet.</div>
+      </div>
+      <div class="drawer-footer">
+        <button class="secondary-btn btn-sm" id="clearHistoryBtn"><i class="fa-solid fa-trash"></i> Clear History</button>
+      </div>
+    </aside>
+
+    <!-- Keyboard Shortcuts Modal -->
+    <div class="modal-overlay" id="shortcutsModal">
+      <div class="modal-card glass-panel">
+        <div class="modal-header">
+          <h3><i class="fa-solid fa-keyboard"></i> Keyboard Shortcuts</h3>
+          <button class="close-modal-btn" id="closeShortcutsBtn">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-list">
+            <div class="shortcut-item"><kbd>0-9</kbd> <span>Enter numbers</span></div>
+            <div class="shortcut-item"><kbd>+</kbd> <kbd>-</kbd> <kbd>*</kbd> <kbd>/</kbd> <span>Basic arithmetic</span></div>
+            <div class="shortcut-item"><kbd>Enter</kbd> or <kbd>=</kbd> <span>Calculate result</span></div>
+            <div class="shortcut-item"><kbd>Backspace</kbd> <span>Delete last character</span></div>
+            <div class="shortcut-item"><kbd>Escape</kbd> <span>Clear screen (AC)</span></div>
+            <div class="shortcut-item"><kbd>^</kbd> <span>Exponent (x^y)</span></div>
+            <div class="shortcut-item"><kbd>(</kbd> <kbd>)</kbd> <span>Parentheses</span></div>
+            <div class="shortcut-item"><kbd>s</kbd> <kbd>c</kbd> <kbd>t</kbd> <span>sin, cos, tan</span></div>
+            <div class="shortcut-item"><kbd>l</kbd> <span>Natural log (ln)</span></div>
+            <div class="shortcut-item"><kbd>p</kbd> <span>Pi (π)</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- App Scripts -->
+  <script src="js/grapher.js"></script>
+  <script src="js/stats.js"></script>
+  <script src="js/solvers.js"></script>
+  <script src="js/converter.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

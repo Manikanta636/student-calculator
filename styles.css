@@ -1,0 +1,1182 @@
+/* ==========================================================================
+   OmniCalc Student Calculator Design System & Theme Stylesheet
+   ========================================================================== */
+
+:root {
+  /* Color Palette - Dark Theme (Default) */
+  --bg-gradient: radial-gradient(circle at 15% 15%, #181c2e 0%, #0f121e 60%, #080911 100%);
+  --panel-bg: rgba(22, 27, 46, 0.75);
+  --panel-border: rgba(255, 255, 255, 0.08);
+  --glass-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  
+  --text-main: #f0f4fc;
+  --text-secondary: #8c9ba5;
+  --text-muted: #5c6b77;
+
+  /* Accent Colors */
+  --accent-blue: #3b82f6;
+  --accent-cyan: #00f2fe;
+  --accent-pink: #ff4b8b;
+  --accent-purple: #8b5cf6;
+  --accent-amber: #f59e0b;
+  --accent-emerald: #10b981;
+  --accent-rose: #ef4444;
+
+  /* Keypad Buttons */
+  --key-num-bg: rgba(255, 255, 255, 0.06);
+  --key-num-hover: rgba(255, 255, 255, 0.12);
+  --key-func-bg: rgba(59, 130, 246, 0.15);
+  --key-func-hover: rgba(59, 130, 246, 0.28);
+  --key-op-bg: rgba(139, 92, 246, 0.2);
+  --key-op-hover: rgba(139, 92, 246, 0.35);
+  --key-equals-bg: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
+  --key-equals-shadow: 0 4px 15px rgba(0, 114, 255, 0.4);
+
+  /* Inputs & Interactive */
+  --input-bg: rgba(10, 13, 24, 0.6);
+  --input-border: rgba(255, 255, 255, 0.12);
+  --input-focus: #3b82f6;
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+
+  --transition-fast: 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-theme="light"] {
+  --bg-gradient: radial-gradient(circle at 15% 15%, #f1f5f9 0%, #e2e8f0 60%, #cbd5e1 100%);
+  --panel-bg: rgba(255, 255, 255, 0.85);
+  --panel-border: rgba(0, 0, 0, 0.08);
+  --glass-shadow: 0 15px 35px rgba(0, 0, 0, 0.08), inset 0 1px 1px rgba(255, 255, 255, 0.8);
+  
+  --text-main: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+
+  --key-num-bg: rgba(0, 0, 0, 0.04);
+  --key-num-hover: rgba(0, 0, 0, 0.08);
+  --key-func-bg: rgba(59, 130, 246, 0.1);
+  --key-func-hover: rgba(59, 130, 246, 0.2);
+  --key-op-bg: rgba(139, 92, 246, 0.12);
+  --key-op-hover: rgba(139, 92, 246, 0.25);
+  
+  --input-bg: rgba(255, 255, 255, 0.9);
+  --input-border: rgba(0, 0, 0, 0.15);
+}
+
+/* Reset & Base Settings */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  min-height: 100vh;
+  background: var(--bg-gradient);
+  color: var(--text-main);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: hidden;
+  padding: 1rem;
+}
+
+/* Glassmorphism Panel Utility */
+.glass-panel {
+  background: var(--panel-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--panel-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: var(--radius-lg);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+}
+
+/* App Container */
+.app-container {
+  width: 100%;
+  max-width: 1200px;
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* Header Navbar */
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem 1.5rem;
+  background: var(--panel-bg);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-lg);
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.logo-group {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.logo-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(0, 242, 254, 0.3);
+}
+
+.logo-text h1 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  line-height: 1.1;
+  background: linear-gradient(135deg, #fff 30%, var(--accent-cyan) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.logo-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--accent-cyan);
+}
+
+/* Nav Tabs */
+.nav-tabs {
+  display: flex;
+  gap: 0.4rem;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 0.3rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--panel-border);
+}
+
+.tab-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  padding: 0.6rem 1.1rem;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: var(--transition-fast);
+}
+
+.tab-btn:hover {
+  color: var(--text-main);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.tab-btn.active {
+  background: var(--accent-blue);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.35);
+}
+
+.header-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.icon-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  background: var(--key-num-bg);
+  border: 1px solid var(--panel-border);
+  color: var(--text-main);
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-fast);
+}
+
+.icon-btn:hover {
+  background: var(--key-num-hover);
+  transform: translateY(-2px);
+}
+
+/* Main Content Area */
+.main-content {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.tab-content {
+  display: none;
+  width: 100%;
+  animation: fadeIn var(--transition-smooth);
+}
+
+.tab-content.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================================================================
+   1. SCIENTIFIC CALCULATOR TAB STYLES
+   ========================================================================== */
+
+.calculator-card {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+/* Screen Display */
+.calc-display-container {
+  background: var(--input-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-md);
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 120px;
+  text-align: right;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.display-top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.status-indicators {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.indicator-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  background: rgba(59, 130, 246, 0.2);
+  color: var(--accent-cyan);
+  border: 1px solid rgba(0, 242, 254, 0.3);
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.indicator-badge.hidden {
+  display: none;
+}
+
+.expression-line {
+  font-family: 'Fira Code', monospace;
+  font-size: 1rem;
+  color: var(--text-secondary);
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: none;
+}
+
+.expression-line::-webkit-scrollbar { display: none; }
+
+.main-result-line {
+  font-family: 'Fira Code', monospace;
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: var(--text-main);
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: none;
+}
+
+.main-result-line::-webkit-scrollbar { display: none; }
+
+/* Control Pill Row & Memory Bar */
+.control-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.pill-toggle {
+  background: var(--key-num-bg);
+  border: 1px solid var(--panel-border);
+  color: var(--text-secondary);
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.pill-toggle.active {
+  background: var(--accent-purple);
+  color: #fff;
+  border-color: transparent;
+}
+
+.memory-bar {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.mem-btn {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--panel-border);
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.35rem 0.6rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.mem-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-main);
+}
+
+/* Keypad Grid */
+.keypad-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.6rem;
+}
+
+.key {
+  height: 52px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--panel-border);
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-fast);
+  user-select: none;
+}
+
+.key:active {
+  transform: scale(0.94);
+}
+
+.key-num {
+  background: var(--key-num-bg);
+  color: var(--text-main);
+}
+
+.key-num:hover {
+  background: var(--key-num-hover);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.key-func {
+  background: var(--key-func-bg);
+  color: var(--accent-cyan);
+  font-size: 0.95rem;
+}
+
+.key-func:hover {
+  background: var(--key-func-hover);
+  box-shadow: 0 0 10px rgba(0, 242, 254, 0.2);
+}
+
+.key-op {
+  background: var(--key-op-bg);
+  color: var(--accent-purple);
+  font-size: 1.2rem;
+}
+
+.key-op:hover {
+  background: var(--key-op-hover);
+}
+
+.key-action {
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--accent-rose);
+}
+
+.key-action:hover {
+  background: rgba(239, 68, 68, 0.3);
+}
+
+.key-clear {
+  font-weight: 700;
+}
+
+.key-equals {
+  background: var(--key-equals-bg);
+  color: #ffffff;
+  border: none;
+  font-size: 1.4rem;
+  font-weight: 700;
+  box-shadow: var(--key-equals-shadow);
+}
+
+.key-equals:hover {
+  filter: brightness(1.15);
+}
+
+/* ==========================================================================
+   2. 2D GRAPHING TAB STYLES
+   ========================================================================== */
+
+.grapher-layout {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 1.25rem;
+  width: 100%;
+}
+
+@media (max-width: 900px) {
+  .grapher-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.graph-sidebar {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.graph-sidebar h3 {
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.function-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.func-input-group label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+.input-with-color {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.input-with-color input[type="text"] {
+  flex: 1;
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  color: var(--text-main);
+  padding: 0.6rem 0.8rem;
+  border-radius: var(--radius-sm);
+  font-family: 'Fira Code', monospace;
+  font-size: 0.9rem;
+  outline: none;
+}
+
+.input-with-color input[type="text"]:focus {
+  border-color: var(--input-focus);
+}
+
+.input-with-color input[type="color"] {
+  width: 38px;
+  height: 38px;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  background: transparent;
+}
+
+.primary-btn {
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+  color: #fff;
+  border: none;
+  padding: 0.75rem 1.2rem;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: var(--transition-fast);
+}
+
+.primary-btn:hover {
+  filter: brightness(1.1);
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+}
+
+.secondary-btn {
+  background: var(--key-num-bg);
+  border: 1px solid var(--panel-border);
+  color: var(--text-main);
+  padding: 0.6rem 1rem;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  transition: var(--transition-fast);
+}
+
+.secondary-btn:hover {
+  background: var(--key-num-hover);
+}
+
+.btn-sm { padding: 0.4rem 0.8rem; font-size: 0.8rem; }
+
+.preset-section h4, .axis-limits h4 {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.preset-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.preset-chip {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--panel-border);
+  color: var(--text-secondary);
+  padding: 0.35rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.preset-chip:hover {
+  color: var(--accent-cyan);
+  border-color: var(--accent-cyan);
+}
+
+.range-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+  margin-bottom: 0.6rem;
+}
+
+.range-grid label {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  display: block;
+}
+
+.range-grid input {
+  width: 100%;
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  color: var(--text-main);
+  padding: 0.35rem 0.5rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+}
+
+.trace-info {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+/* Graph Viewport */
+.graph-viewport {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  height: 580px;
+}
+
+.canvas-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.8rem;
+}
+
+.canvas-tools {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.canvas-tools button {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  background: var(--key-num-bg);
+  border: 1px solid var(--panel-border);
+  color: var(--text-main);
+  cursor: pointer;
+}
+
+.canvas-wrapper {
+  flex: 1;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--panel-border);
+  background: #090c15;
+}
+
+canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* ==========================================================================
+   3. STATISTICS CALCULATOR STYLES
+   ========================================================================== */
+
+.stats-layout {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 1.25rem;
+}
+
+@media (max-width: 900px) {
+  .stats-layout { grid-template-columns: 1fr; }
+}
+
+.stats-input-panel {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.section-desc {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+#statsDataInput {
+  width: 100%;
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  color: var(--text-main);
+  padding: 0.8rem;
+  border-radius: var(--radius-md);
+  font-family: 'Fira Code', monospace;
+  font-size: 0.95rem;
+  resize: vertical;
+  outline: none;
+}
+
+.stats-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.stats-results-panel {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 0.8rem;
+}
+
+.stat-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-md);
+  padding: 0.9rem;
+}
+
+.stat-card.highlight-card {
+  background: rgba(59, 130, 246, 0.12);
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.3rem;
+}
+
+.stat-value {
+  font-family: 'Fira Code', monospace;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.sorted-data-box {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  border: 1px solid var(--panel-border);
+}
+
+.sorted-data-box h4 {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.sorted-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  font-family: 'Fira Code', monospace;
+}
+
+.tag-num {
+  background: var(--key-func-bg);
+  color: var(--accent-cyan);
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+}
+
+/* ==========================================================================
+   4. SOLVERS & FORMULAS STYLES
+   ========================================================================== */
+
+.solvers-container {
+  max-width: 680px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.solver-tabs {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.solver-tab-btn {
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  color: var(--text-secondary);
+  padding: 0.6rem 1.2rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.solver-tab-btn.active {
+  background: var(--accent-purple);
+  color: #fff;
+  border-color: transparent;
+}
+
+.solver-view {
+  display: none;
+}
+
+.solver-view.active {
+  display: block;
+}
+
+.solver-card {
+  padding: 1.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.formula-banner {
+  background: rgba(139, 92, 246, 0.15);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  color: var(--accent-cyan);
+  padding: 0.8rem 1rem;
+  border-radius: var(--radius-md);
+  font-family: 'Fira Code', monospace;
+  font-size: 1.05rem;
+  text-align: center;
+}
+
+.quad-inputs {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.quad-field {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.quad-field input {
+  width: 80px;
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  color: var(--text-main);
+  padding: 0.6rem;
+  border-radius: var(--radius-sm);
+  font-family: 'Fira Code', monospace;
+  text-align: center;
+}
+
+.linear-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.linear-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.95rem;
+}
+
+.linear-row input {
+  width: 70px;
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  color: var(--text-main);
+  padding: 0.5rem;
+  border-radius: var(--radius-sm);
+  text-align: center;
+}
+
+.solution-box {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.root-badge {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--accent-emerald);
+  font-weight: 700;
+}
+
+.root-display {
+  font-family: 'Fira Code', monospace;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.step-explanation {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.geom-select select {
+  width: 100%;
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  color: var(--text-main);
+  padding: 0.6rem 0.8rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.95rem;
+  outline: none;
+}
+
+.geom-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+/* ==========================================================================
+   5. UNIT CONVERTER STYLES
+   ========================================================================== */
+
+.converter-card {
+  max-width: 580px;
+  margin: 0 auto;
+  padding: 1.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.converter-category-bar {
+  display: flex;
+  gap: 0.4rem;
+  overflow-x: auto;
+  padding-bottom: 0.4rem;
+  scrollbar-width: none;
+}
+
+.cat-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--panel-border);
+  color: var(--text-secondary);
+  padding: 0.5rem 0.9rem;
+  border-radius: 16px;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.cat-btn.active {
+  background: var(--accent-blue);
+  color: #fff;
+  border-color: transparent;
+}
+
+.converter-box {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+@media (max-width: 600px) {
+  .converter-box { flex-direction: column; }
+}
+
+.convert-field {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.convert-field label {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.convert-field input, .convert-field select {
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  color: var(--text-main);
+  padding: 0.75rem 0.9rem;
+  border-radius: var(--radius-md);
+  font-family: 'Fira Code', monospace;
+  font-size: 1.1rem;
+  outline: none;
+}
+
+.swap-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--key-func-bg);
+  border: 1px solid var(--panel-border);
+  color: var(--accent-cyan);
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.conversion-formula-tag {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+/* ==========================================================================
+   DRAWER & MODAL STYLES
+   ========================================================================== */
+
+.history-drawer {
+  position: fixed;
+  top: 0;
+  right: -360px;
+  width: 360px;
+  height: 100vh;
+  background: var(--panel-bg);
+  backdrop-filter: blur(20px);
+  border-left: 1px solid var(--panel-border);
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  transition: right var(--transition-smooth);
+}
+
+.history-drawer.open { right: 0; }
+
+.drawer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem;
+  border-bottom: 1px solid var(--panel-border);
+}
+
+.close-drawer-btn, .close-modal-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.drawer-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.history-item {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-md);
+  padding: 0.8rem;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.history-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--accent-blue);
+}
+
+.history-expr {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.history-val {
+  font-family: 'Fira Code', monospace;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--accent-cyan);
+  text-align: right;
+}
+
+.empty-history {
+  color: var(--text-muted);
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 0.9rem;
+}
+
+.drawer-footer {
+  padding: 1rem;
+  border-top: 1px solid var(--panel-border);
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  z-index: 200;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.modal-overlay.open { display: flex; }
+
+.modal-card {
+  width: 100%;
+  max-width: 480px;
+  padding: 1.5rem;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.shortcut-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.6rem;
+}
+
+.shortcut-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+kbd {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--panel-border);
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.8rem;
+  color: var(--accent-cyan);
+}
