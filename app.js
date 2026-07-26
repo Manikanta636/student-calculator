@@ -326,6 +326,7 @@ class Grapher {
     }
   }
 }
+window.Grapher = Grapher;
 
 // ==========================================================================
 // 2. STATISTICS ENGINE
@@ -402,6 +403,7 @@ const StatsEngine = {
     };
   }
 };
+window.StatsEngine = StatsEngine;
 
 // ==========================================================================
 // 3. SOLVERS & GEOMETRY ENGINE
@@ -472,6 +474,7 @@ const SolversEngine = {
     return 'Invalid selection';
   }
 };
+window.SolversEngine = SolversEngine;
 
 // ==========================================================================
 // 4. MULTI-UNIT CONVERTER ENGINE
@@ -522,6 +525,7 @@ const ConverterEngine = {
     return baseVal / catData.rates[toUnit];
   }
 };
+window.ConverterEngine = ConverterEngine;
 
 // ==========================================================================
 // 5. MAIN APPLICATION CONTROLLER
