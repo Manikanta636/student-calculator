@@ -1,5 +1,5 @@
 /**
- * OmniCalc - Main Application Controller
+ * Student Math Calc - Main Application Controller
  * Handles scientific evaluator, memory state, keyboard shortcuts, history, and UI tab navigation.
  */
 
@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     isDeg: true,
     isShift: false,
     isHyp: false,
-    history: JSON.parse(localStorage.getItem('omni_calc_history') || '[]')
+    history: JSON.parse(localStorage.getItem('student_math_calc_history') || '[]')
   };
 
   // DOM Element References
@@ -335,7 +335,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function saveHistoryItem(expr, val) {
     state.history.unshift({ expr, val, time: new Date().toLocaleTimeString() });
     if (state.history.length > 30) state.history.pop();
-    localStorage.setItem('omni_calc_history', JSON.stringify(state.history));
+    localStorage.setItem('student_math_calc_history', JSON.stringify(state.history));
   }
 
   function renderHistory() {
@@ -362,7 +362,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.getElementById('clearHistoryBtn').addEventListener('click', () => {
     state.history = [];
-    localStorage.removeItem('omni_calc_history');
+    localStorage.removeItem('student_math_calc_history');
     renderHistory();
   });
 
